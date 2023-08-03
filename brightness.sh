@@ -1,4 +1,6 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
+echo "menenen" >>  ~/blog.txt
 
 # Get current brightness and max brightness
 current=$(cat /sys/class/backlight/gmux_backlight/brightness)
@@ -36,8 +38,9 @@ then
     if (( $(echo "$new > $max" |bc -l) )); then new=$max; fi
 
     # Update brightness
-    echo ${new%.*} | sudo dd of=/sys/class/backlight/gmux_backlight/brightness
+    echo ${new%.*} | sudo tee /sys/class/backlight/gmux_backlight/brightness >>  ~/blog.txt
 else
     echo "Invalid argument: please provide a number, optionally starting with '+' or '-' for relative adjustment."
     exit 1
 fi
+
